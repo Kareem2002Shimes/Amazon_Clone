@@ -1,0 +1,31 @@
+.checkoutProduct {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.checkoutProduct-image {
+  object-fit: contain;
+  width: 180px;
+  height: 180px;
+}
+.checkoutProduct-info {
+  padding-left: 20px;
+}
+.checkoutProduct-info > button {
+  background-color: #f0c14b;
+  border: 1px solid;
+  margin-top: 10px;
+  border-color: #9c7e31 #846a29;
+  color: #111;
+  cursor: pointer;
+}
+.checkoutProduct-rating {
+  display: flex;
+}
+.checkoutProduct-rating svg {
+  color: rgb(255, 164, 28);
+}
+.checkoutProduct-title {
+  font-size: 17px;
+  font-weight: 800;
+}

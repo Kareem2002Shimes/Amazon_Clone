@@ -18,6 +18,13 @@
   border-color: #9c7e31 #846a29;
   color: #111;
   cursor: pointer;
+  width: 150px;
+  height: 35px;
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+}
+.checkoutProduct-info > button:active {
+  transform: scale(0.8);
 }
 .checkoutProduct-rating {
   display: flex;

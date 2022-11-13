@@ -1,9 +1,7 @@
 const functions = require("firebase-functions");
 const express = require("express");
 const cors = require("cors");
-const stripe = require("stripe")(
-  "sk_test_51LOUG4LJ0QoegYzS2YGCKFuuXaoMxvv6hlGvaL38DkXjrsAnYBF678pGAqhRBj00PUC6DXPzVCzi6nSeHxtwGhrG00IjXcUwyU"
-);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 // API
 
@@ -30,7 +28,7 @@ app.post("/payments/create", async (request, response) => {
 });
 
 // Example endpoit
-// http://localhost:5001/clone-ad5d7/us-central1/api
+// http://localhost:5001/clone-dffaf/us-central1/api
 
 // Listen command
 exports.api = functions.https.onRequest(app);

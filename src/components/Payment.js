@@ -1,16 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CheckoutProduct from "./CheckoutProduct";
-import { GlobalContext } from "./context/GlobalState";
+import { useAuth } from "./context/GlobalState";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CurrencyFormat from "react-currency-format";
 import { getBasketTotal } from "./context/AppReducer";
 import axios from "./axios";
 import { db } from "../firebase";
 import "./Payment.css";
+import { doc, setDoc } from "firebase/firestore";
 
 const Payment = () => {
-  const { user, basket, dispatch } = useContext(GlobalContext);
+  const { user, basket, dispatch } = useAuth();
+
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
@@ -18,7 +20,8 @@ const Payment = () => {
   const [disabled, setDisabled] = useState(true);
   const [succeeded, setSucceeded] = useState(false);
   const [processing, setProcessing] = useState("");
-  const [clientSecret, setClientSecret] = useState(true);
+  const [clientSecret, setClientSecret] = useState();
+
   useEffect(() => {
     // generate the special stripe secret which allows us to cherge a customer
     const getClientSecret = async () => {
@@ -27,12 +30,14 @@ const Payment = () => {
         url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
       });
       setClientSecret(response.data.clientSecret);
+      return response;
     };
     getClientSecret();
   }, [basket]);
+  // console.log("ClientSecret", clientSecret);
   const handleSubmit = async (e) => {
-    // do all the fancy stripe stuff
     e.preventDefault();
+    // do all the fancy stripe stuff
     setProcessing(true);
     const payload = await stripe
       .confirmCardPayment(clientSecret, {
@@ -41,24 +46,22 @@ const Payment = () => {
         },
       })
       .then(({ paymentIntent }) => {
-        db.collection("users")
-          .doc(user?.uid)
-          .collection("orders")
-          .doc(paymentIntent.id)
-          .set({
-            basket: basket,
-            amount: paymentIntent.amount,
-            created: paymentIntent.created,
-          });
+        const ref = doc(db, "users", user?.uid, "orders", paymentIntent.id);
+        setDoc(ref, {
+          basket: basket,
+          amount: paymentIntent.amount,
+          created: paymentIntent.created,
+        });
         setSucceeded(true);
         setError(null);
         setProcessing(false);
         dispatch({
           type: "EMPTY_BASKET",
         });
-        navigate("/orders");
+        navigate("/orders", { replace: true });
       });
   };
+
   const handleChange = (e) => {
     setDisabled(e.empty);
     setError(error ? error.message : "");

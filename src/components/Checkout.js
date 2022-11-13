@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import CheckoutImg from "../images/checkoutAd.jpg";
 import Subtotal from "./Subtotal";
 import CheckoutProduct from "./CheckoutProduct";
-import { GlobalContext } from "./context/GlobalState";
+import { useAuth } from "./context/GlobalState";
 import "./Checkout.css";
 
 const Checkout = () => {
-  const { basket, user, dispatch } = useContext(GlobalContext);
+  const { basket, user, dispatch } = useAuth();
   return (
     <div className="checkout">
       <div className="checkout-left">

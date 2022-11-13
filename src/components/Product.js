@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import StarIcon from "@mui/icons-material/Star";
 import "./Product.css";
-import { GlobalContext } from "./context/GlobalState";
+import { useAuth } from "./context/GlobalState";
 
 const Product = ({ title, price, image, rating, id }) => {
-  const { basket, dispatch } = useContext(GlobalContext);
+  const { dispatch } = useAuth();
 
   const addToBasket = () => {
     dispatch({

@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import CurrencyFormat from "react-currency-format";
-import { GlobalContext } from "./context/GlobalState";
+import { useAuth } from "./context/GlobalState";
 import { getBasketTotal } from "./context/AppReducer";
 import { useNavigate } from "react-router-dom";
 import "./Subtotal.css";
 
 const Subtotal = () => {
-  const { basket, dispatch } = useContext(GlobalContext);
+  const { basket } = useAuth();
   const navigate = useNavigate();
   return (
     <div className="subtotal">

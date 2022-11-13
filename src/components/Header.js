@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import Logo from "../images/amazonLogo.png";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Link } from "react-router-dom";
-import { GlobalContext } from "./context/GlobalState";
 import "./Header.css";
 import { auth } from "../firebase";
+import { useAuth } from "./context/GlobalState";
 
 const Header = () => {
-  const { basket, user, dispatch } = useContext(GlobalContext);
+  const { basket, user } = useAuth();
+
   const handleAuthentication = () => {
     if (user) {
       auth.signOut();
@@ -34,7 +35,7 @@ const Header = () => {
             </span>
           </div>
         </Link>
-        <Link to="/orders">
+        <Link to={user ? "/orders" : "/"}>
           <div className="header-option">
             <span className="header-optionLineOne">Returns</span>
             <span className="header-optionLineTwo">& Orders</span>

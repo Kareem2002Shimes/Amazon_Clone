@@ -1,4 +1,4 @@
-import { React, createContext, useReducer } from "react";
+import { React, createContext, useReducer, useContext } from "react";
 import AppReducer, { initialState } from "./AppReducer";
 
 export const GlobalContext = createContext();
@@ -12,4 +12,7 @@ export const GlobalProvider = (props) => {
       {props.children}
     </GlobalContext.Provider>
   );
+};
+export const useAuth = () => {
+  return useContext(GlobalContext);
 };

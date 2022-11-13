@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import moment from "moment";
 import CheckoutProduct from "./CheckoutProduct";
 import "./Order.css";

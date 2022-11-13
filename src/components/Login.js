@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import LogoImg from "../images/amazonLogo2.png";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
-
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import "../components/Login.css";
 const Login = () => {
   const navigate = useNavigate();
@@ -10,14 +13,14 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const signIn = (e) => {
     e.preventDefault();
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((auth) => navigate("/"));
+
+    signInWithEmailAndPassword(auth, email, password).then((auth) =>
+      navigate("/")
+    );
   };
   const register = (e) => {
     e.preventDefault();
-    auth
-      .createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((auth) => {
         if (auth) {
           navigate("/");

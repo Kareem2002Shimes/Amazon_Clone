@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import StarIcon from "@mui/icons-material/Star";
-import { GlobalContext } from "./context/GlobalState";
+import { useAuth } from "./context/GlobalState";
 import "./CheckoutProduct.css";
 
 const CheckoutProduct = ({ id, image, title, price, rating, hiddenButton }) => {
-  const { basket, dispatch } = useContext(GlobalContext);
+  const { dispatch } = useAuth();
+
   const removeFromBasket = () => {
     dispatch({
       type: "REMOVE_FROM_BASKET",

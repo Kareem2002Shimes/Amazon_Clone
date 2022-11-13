@@ -1,29 +1,37 @@
-import React, { useContext, useEffect, useState } from "react";
+import {
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
-import { GlobalContext } from "./context/GlobalState";
+import { useAuth } from "./context/GlobalState";
 import Order from "./Order";
 import "./Orders.css";
 const Orders = () => {
-  const { user, basket, dispatch } = useContext(GlobalContext);
+  const { user } = useAuth();
 
   const [orders, setOrders] = useState([]);
-  if (user) {
-    db.collection("users")
-      .doc(user?.uid)
-      .collection("orders")
-      .orderBy("created", "desc")
-      .onSnapshot((snapshot) =>
+
+  useEffect(() => {
+    if (user) {
+      const collRef = collection(db, "users", user?.uid, "orders");
+      const orderedRef = query(collRef, orderBy("created", "desc"));
+      onSnapshot(orderedRef, (querySnapshot) => {
         setOrders(
-          snapshot.docs.map((doc) => ({
+          querySnapshot.docs.map((doc) => ({
             id: doc.id,
             data: doc.data(),
           }))
-        )
-      );
-  } else {
-    setOrders([]);
-  }
-  useEffect(() => {}, [user]);
+        );
+      });
+    } else {
+      setOrders([]);
+    }
+  }, [user]);
 
   return (
     <div className="orders">

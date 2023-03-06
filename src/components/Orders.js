@@ -1,21 +1,12 @@
-import {
-  collection,
-  doc,
-  getDoc,
-  onSnapshot,
-  orderBy,
-  query,
-} from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../context/GlobalState";
 import { db } from "../firebase";
-import { useAuth } from "./context/GlobalState";
 import Order from "./Order";
 import "./Orders.css";
 const Orders = () => {
-  const { user } = useAuth();
-
   const [orders, setOrders] = useState([]);
-
+  const { user } = useAuth();
   useEffect(() => {
     if (user) {
       const collRef = collection(db, "users", user?.uid, "orders");
@@ -32,7 +23,6 @@ const Orders = () => {
       setOrders([]);
     }
   }, [user]);
-
   return (
     <div className="orders">
       <h1>Your Orders</h1>
@@ -44,4 +34,5 @@ const Orders = () => {
     </div>
   );
 };
+
 export default Orders;

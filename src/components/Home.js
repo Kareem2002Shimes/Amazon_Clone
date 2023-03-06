@@ -1,14 +1,15 @@
 import React from "react";
+import homeImg from "../images/home.jpg";
+import Product from "./Product";
+import "./Home.css";
 import shortid from "shortid";
-import homeImg from "../images/homeBg.jpg";
 import ProductImg1 from "../images/products/1.png";
 import ProductImg2 from "../images/products/2.png";
 import ProductImg3 from "../images/products/3.png";
 import ProductImg4 from "../images/products/4.png";
 import ProductImg5 from "../images/products/5.png";
 import ProductImg6 from "../images/products/6.png";
-import "./Home.css";
-import Product from "./Product";
+
 const Home = () => {
   return (
     <div className="home">
@@ -27,7 +28,7 @@ const Home = () => {
             image={ProductImg2}
             price={682.95}
             title="Lenovo - 2021 - IdeaPad 3 - Gaming Laptop - AMD Ryzen 5 5600H - 8GB RAM - 256GB Storage - NVIDIA GeForce GTX 1650-15.6 FHD Display - Windows 11 Home"
-            rating={5}
+            rating={4}
           />
         </div>
         <div className="home-row">
@@ -43,7 +44,7 @@ const Home = () => {
             image={ProductImg4}
             price={229}
             title="Meta Quest 2 — Advanced All-In-One Virtual Reality Headset — 128 GB"
-            rating={5}
+            rating={3}
           />
           <Product
             id={shortid.generate()}

@@ -1,10 +1,9 @@
 import React from "react";
 import CurrencyFormat from "react-currency-format";
-import { useAuth } from "./context/GlobalState";
-import { getBasketTotal } from "./context/AppReducer";
-import { useNavigate } from "react-router-dom";
+import { getBasketTotal } from "../context/AppReducer";
+import { useAuth } from "../context/GlobalState";
 import "./Subtotal.css";
-
+import { useNavigate } from "react-router-dom";
 const Subtotal = () => {
   const { basket } = useAuth();
   const navigate = useNavigate();

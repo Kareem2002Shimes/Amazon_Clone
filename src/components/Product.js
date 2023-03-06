@@ -1,11 +1,10 @@
 import React from "react";
-import StarIcon from "@mui/icons-material/Star";
+import { useAuth } from "../context/GlobalState";
+import starIcon from "../images/icons/star.png";
 import "./Product.css";
-import { useAuth } from "./context/GlobalState";
 
 const Product = ({ title, price, image, rating, id }) => {
   const { dispatch } = useAuth();
-
   const addToBasket = () => {
     dispatch({
       type: "ADD_TO_BASKET",
@@ -26,15 +25,15 @@ const Product = ({ title, price, image, rating, id }) => {
           <small>$</small>
           <strong>{price}</strong>
         </p>
-        <div className="product-rating">
-          {Array(rating)
-            .fill()
-            .map((_, i) => (
-              <p>
-                <StarIcon />
-              </p>
-            ))}
-        </div>
+      </div>
+      <div className="product-rating">
+        {Array(rating)
+          .fill()
+          .map((_, i) => (
+            <p key={i}>
+              <img src={starIcon} />
+            </p>
+          ))}
       </div>
       <img src={image} alt="product-img" />
       <button onClick={addToBasket}>Add to Basket</button>

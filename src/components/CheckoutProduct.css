@@ -29,8 +29,14 @@
 .checkoutProduct-rating {
   display: flex;
 }
-.checkoutProduct-rating svg {
-  color: rgb(255, 164, 28);
+.checkoutProduct-rating p {
+  width: 20px;
+  margin: 0 5px;
+}
+.checkoutProduct-rating p img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .checkoutProduct-title {
   font-size: 17px;

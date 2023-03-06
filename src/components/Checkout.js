@@ -1,28 +1,36 @@
 import React from "react";
-import CheckoutImg from "../images/checkoutAd.jpg";
-import Subtotal from "./Subtotal";
+import { useAuth } from "../context/GlobalState";
+import checkoutImg from "../images/checkoutAd.jpg";
 import CheckoutProduct from "./CheckoutProduct";
-import { useAuth } from "./context/GlobalState";
 import "./Checkout.css";
+import Subtotal from "./Subtotal";
 
 const Checkout = () => {
-  const { basket, user, dispatch } = useAuth();
+  const { user, basket } = useAuth();
   return (
     <div className="checkout">
       <div className="checkout-left">
-        <img className="checkout-ad" src={CheckoutImg} alt="checkout-ad" />
+        <img className="checkout-ad" src={checkoutImg} />
         <div>
           <h3>Hello, {user?.email}</h3>
           <h2 className="checkout-title">Your shopping Basket</h2>
-          {basket.map((item) => (
-            <CheckoutProduct
-              id={item.id}
-              title={item.title}
-              image={item.image}
-              price={item.price}
-              rating={item.rating}
-            />
-          ))}
+          {basket.length > 0 ? (
+            basket.map((item) => (
+              <CheckoutProduct
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                image={item.image}
+                price={item.price}
+                rating={item.rating}
+              />
+            ))
+          ) : (
+            <p>
+              You have no items in your basket.To buy one or more
+              items,click"Add to basket".
+            </p>
+          )}
         </div>
       </div>
       <div className="checkout-right">

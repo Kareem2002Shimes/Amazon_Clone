@@ -1,19 +1,16 @@
 import React from "react";
-import SearchIcon from "@mui/icons-material/Search";
-import Logo from "../images/amazonLogo.png";
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Link } from "react-router-dom";
-import "./Header.css";
+import { useAuth } from "../context/GlobalState";
+import Logo from "../images/header-logo.png";
+import searchIcon from "../images/icons/searchIcon.png";
+import shoppingCart from "../images/icons/shopping-cart.png";
 import { auth } from "../firebase";
-import { useAuth } from "./context/GlobalState";
+import "./Header.css";
 
 const Header = () => {
-  const { basket, user } = useAuth();
-
+  const { user, basket } = useAuth();
   const handleAuthentication = () => {
-    if (user) {
-      auth.signOut();
-    }
+    auth.signOut();
   };
   return (
     <div className="header">
@@ -22,7 +19,7 @@ const Header = () => {
       </Link>
       <div className="header-search">
         <input className="header-searchInput" type="text" />
-        <SearchIcon className="header-searchIcon" />
+        <img className="header-searchIcon" src={searchIcon} alt="search-icon" />
       </div>
       <div className="header-nav">
         <Link to={!user && "/login"}>
@@ -31,11 +28,11 @@ const Header = () => {
               Hello {user ? `${user.email}` : "Guest"}
             </span>
             <span className="header-optionLineTwo">
-              {user ? `Sign Out` : "Sign In"}
+              {user ? "Sign Out" : "Sign In"}
             </span>
           </div>
         </Link>
-        <Link to={user ? "/orders" : "/"}>
+        <Link to="/orders">
           <div className="header-option">
             <span className="header-optionLineOne">Returns</span>
             <span className="header-optionLineTwo">& Orders</span>
@@ -47,7 +44,7 @@ const Header = () => {
         </div>
         <Link to="/checkout">
           <div className="header-optionBasket">
-            <ShoppingBasketIcon />
+            <img src={shoppingCart} />
             <span className="header-optionLineTwo header-basketCount">
               {basket?.length}
             </span>
